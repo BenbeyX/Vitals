@@ -7,22 +7,22 @@ public class VelocityTest {
     @Test
     public void testYVelocity() {
         Velocity velocity = new Velocity(0,10);
-        assertEquals(0, velocity.getX());
-        assertEquals(10, velocity.getY());
+        assertEquals(0, velocity.getX(), "X should be 0");
+        assertEquals(10, velocity.getY(), "Y should be 10");
     }
 
     @Test
     public void testXVelocity() {
         Velocity velocity = new Velocity(10,0);
-        assertEquals(10, velocity.getX());
-        assertEquals(0, velocity.getY());
+        assertEquals(10, velocity.getX(), "X should be 10");
+        assertEquals(0, velocity.getY(), "Y should be 0");
     }
 
     @Test
     public void testNegativeVelocity() {
         Velocity velocity = new Velocity(-10,-10);
-        assertEquals(-10, velocity.getX());
-        assertEquals(-10, velocity.getY());
+        assertEquals(-10, velocity.getX(), "X should be -10");
+        assertEquals(-10, velocity.getY(), "Y should be -10");
     }
 
     
