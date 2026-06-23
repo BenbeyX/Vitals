@@ -12,6 +12,14 @@ public class Lunge extends Skill {
         this.cooldownDuration = 1.0;
     }    
 
+    public int getRange() {
+        return range;
+    }
+
+    public String getName() {
+        return "Lunge";
+    }
+
     @Override
     public void activate(Player player, Position target, GameContext context) {        
             context.movePlayerTo(target);
