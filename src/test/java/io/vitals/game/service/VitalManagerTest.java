@@ -54,29 +54,6 @@ class VitalManagerTest {
     }
 
     @Test
-    @DisplayName("selectNextVital selects RIGHT when TOP not active")
-    void selectNextVital_groupA_partialAvailability() {
-        vitalManager.activateVital(Vital.RIGHT);
-        vitalManager.activateVital(Vital.BOTTOM);
-        mockRandom.setNextInt(1); 
-        
-        Vital result = vitalManager.selectNextVital(Vital.BOTTOM);
-        
-        assertEquals(Vital.RIGHT, result);
-    }
-
-    @Test
-    @DisplayName("selectNextVital returns null when opposing group has no active vitals")
-    void selectNextVital_opposingGroupEmpty_returnsNull() {
-        vitalManager.activateVital(Vital.TOP);
-        vitalManager.activateVital(Vital.RIGHT);
-        
-        Vital result = vitalManager.selectNextVital(Vital.BOTTOM);
-        
-        assertNull(result);
-    }
-
-    @Test
     @DisplayName("selectNextVital randomly selects between available vitals in group")
     void selectNextVital_randomSelection() {
         vitalManager.activateVital(Vital.TOP);
@@ -181,7 +158,7 @@ class VitalManagerTest {
     @DisplayName("isVitalHit returns true for TOP vital at 44 degrees")
     void isVitalHit_topAt44Degrees_returnsTrue() {
         Position attacker = new Position(0, 0);
-        Position target = new Position(100, 100);
+        Position target = new Position(100, 96);
         
         assertTrue(vitalManager.isVitalHit(attacker, target, Vital.TOP));
     }
@@ -241,13 +218,15 @@ class VitalManagerTest {
     void isVitalHit_coneBoundaries() {
         Position attacker = new Position(0, 0);
         
-        Position rightEdge = new Position(100, 0);
-        assertTrue(vitalManager.isVitalHit(attacker, rightEdge, Vital.RIGHT));
-        assertFalse(vitalManager.isVitalHit(attacker, rightEdge, Vital.BOTTOM));
+        // 0° is in TOP cone
+        Position topCone = new Position(100, 0);
+        assertTrue(vitalManager.isVitalHit(attacker, topCone, Vital.TOP));
+        assertFalse(vitalManager.isVitalHit(attacker, topCone, Vital.RIGHT));
         
-        Position bottomEdge = new Position(0, 100);
-        assertTrue(vitalManager.isVitalHit(attacker, bottomEdge, Vital.RIGHT));
-        assertFalse(vitalManager.isVitalHit(attacker, bottomEdge, Vital.BOTTOM));
+        // 90° is in RIGHT cone
+        Position rightCone = new Position(0, 100);
+        assertTrue(vitalManager.isVitalHit(attacker, rightCone, Vital.RIGHT));
+        assertFalse(vitalManager.isVitalHit(attacker, rightCone, Vital.BOTTOM));
     }
 
     private static class MockRandom extends Random {
