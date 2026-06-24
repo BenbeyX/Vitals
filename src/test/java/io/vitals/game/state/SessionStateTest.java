@@ -1,12 +1,14 @@
 package io.vitals.game.state;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SessionStateTest {
     @Test
+    @DisplayName("SessionState initializes with default values")
     public void testSessionStateInitialValues() {
         SessionState state = new SessionState();
         assertEquals(0, state.getElapsedTime(), "Elapsed time should be 0");
@@ -19,6 +21,7 @@ public class SessionStateTest {
     }
 
     @Test
+    @DisplayName("SessionState setters update values correctly")
     public void testSessionStateSetters() {
         SessionState state = new SessionState();
         state.setElapsedTime(45.5);

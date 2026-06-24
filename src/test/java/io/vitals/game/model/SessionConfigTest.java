@@ -1,10 +1,12 @@
 package io.vitals.game.model;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SessionConfigTest {
     @Test
+    @DisplayName("SessionConfig stores all configuration values correctly")
     public void testSessionConfig() {
         SessionConfig config = new SessionConfig(120, 3, 5.0, MovementType.CHASE, ReactionType.DODGE, 5);
         assertEquals(120, config.getDurationSeconds(), "Duration should be 120");

@@ -1,11 +1,13 @@
 package io.vitals.game.model;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class PositionTest {
     @Test
+    @DisplayName("Position stores X and Y coordinates correctly")
     public void testPosition() {
         Position position = new Position(10, 20);
         assertEquals(position.getX(), 10, "X should be 10");
@@ -13,6 +15,7 @@ public class PositionTest {
     }
 
     @Test
+    @DisplayName("Equal positions have same coordinates")
     public void testPositionEquals() {
         Position position1 = new Position(10, 20);
         Position position2 = new Position(10, 20);
@@ -20,6 +23,7 @@ public class PositionTest {
     }
 
     @Test
+    @DisplayName("Different positions have different coordinates")
     public void testPositionNotEquals() {
         Position position1 = new Position(10, 20);
         Position position2 = new Position(10, 30);

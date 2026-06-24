@@ -1,10 +1,12 @@
 package io.vitals.game.model;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class OpponentTest {
     @Test
+    @DisplayName("Opponent position is set correctly")
     public void testOpponentPosition() {
         Opponent opponent = new Opponent(
             new Position(150, 250), new Velocity(0, 0),
@@ -15,6 +17,7 @@ public class OpponentTest {
     }
 
     @Test
+    @DisplayName("Opponent velocity is set correctly")
     public void testOpponentVelocity() {
         Opponent opponent = new Opponent(
             new Position(0, 0), new Velocity(30, 40),

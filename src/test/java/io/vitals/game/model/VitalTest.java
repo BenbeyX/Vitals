@@ -1,10 +1,12 @@
 package io.vitals.game.model;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class VitalTest {
     @Test
+    @DisplayName("Vital enum values can be parsed from strings")
     public void testVital() {
         assertEquals(Vital.TOP, Vital.fromString("TOP"), "TOP should be the top vital");
         assertEquals(Vital.RIGHT, Vital.fromString("RIGHT"), "RIGHT should be the right vital");
