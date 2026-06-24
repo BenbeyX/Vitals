@@ -5,6 +5,7 @@ import io.vitals.game.model.Velocity;
 import io.vitals.game.constants.GameConstants;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,6 +19,7 @@ public class MovementCalculatorTest {
     }
 
     @Test
+    @DisplayName("Calculate next position when moving right")
     public void testCalculateNextPosition_MovingRight() {
         Position position = new Position(100, 100);
         Velocity velocity = new Velocity(50, 0);
@@ -30,6 +32,7 @@ public class MovementCalculatorTest {
     }
 
     @Test
+    @DisplayName("Calculate next position when moving up")
     public void testCalculateNextPosition_MovingUp() {
         Position position = new Position(100, 100);
         Velocity velocity = new Velocity(0, -30);
@@ -42,6 +45,7 @@ public class MovementCalculatorTest {
     }
 
     @Test
+    @DisplayName("Calculate next position when moving diagonally")
     public void testCalculateNextPosition_MovingDiagonally() {
         Position position = new Position(0, 0);
         Velocity velocity = new Velocity(10, 10);
@@ -54,6 +58,7 @@ public class MovementCalculatorTest {
     }
 
     @Test
+    @DisplayName("Calculate next position with zero velocity")
     public void testCalculateNextPosition_ZeroVelocity() {
         Position position = new Position(100, 200);
         Velocity velocity = new Velocity(0, 0);
@@ -66,6 +71,7 @@ public class MovementCalculatorTest {
     }
 
     @Test
+    @DisplayName("Apply boundary constraints when position is within bounds")
     public void testApplyBoundaryConstraints_PositionWithinBounds() {
         Position position = new Position(400, 300);
         Velocity velocity = new Velocity(10, 10);
@@ -77,6 +83,7 @@ public class MovementCalculatorTest {
     }
 
     @Test
+    @DisplayName("Apply boundary constraints when X position is below zero")
     public void testApplyBoundaryConstraints_PositionBelowZeroX() {
         Position position = new Position(-50, 100);
 
@@ -87,6 +94,7 @@ public class MovementCalculatorTest {
     }
 
     @Test
+    @DisplayName("Apply boundary constraints when Y position is below zero")
     public void testApplyBoundaryConstraints_PositionBelowZeroY() {
         Position position = new Position(100, -50);
 
@@ -97,6 +105,7 @@ public class MovementCalculatorTest {
     }
 
     @Test
+    @DisplayName("Apply boundary constraints when X position exceeds maximum")
     public void testApplyBoundaryConstraints_PositionExceedsMaxX() {
         Position position = new Position(GameConstants.ARENA_SIZE_X + 100, 100);
 
@@ -107,6 +116,7 @@ public class MovementCalculatorTest {
     }
 
     @Test
+    @DisplayName("Apply boundary constraints when Y position exceeds maximum")
     public void testApplyBoundaryConstraints_PositionExceedsMaxY() {
         Position position = new Position(100, GameConstants.ARENA_SIZE_Y + 100);
 
@@ -117,6 +127,7 @@ public class MovementCalculatorTest {
     }
 
     @Test
+    @DisplayName("Check unit collision when units are colliding")
     public void testCheckUnitCollision_UnitsColliding() {
         Position position1 = new Position(0, 0);
         Position position2 = new Position(10, 0);
@@ -129,6 +140,7 @@ public class MovementCalculatorTest {
     }
 
     @Test
+    @DisplayName("Check unit collision when units are touching at edges")
     public void testCheckUnitCollision_UnitsTouching() {
         Position position1 = new Position(0, 0);
         Position position2 = new Position(20, 0);
@@ -141,6 +153,7 @@ public class MovementCalculatorTest {
     }
 
     @Test
+    @DisplayName("Check unit collision when units are not colliding")
     public void testCheckUnitCollision_UnitsNotColliding() {
         Position position1 = new Position(0, 0);
         Position position2 = new Position(100, 0);
@@ -153,6 +166,7 @@ public class MovementCalculatorTest {
     }
 
     @Test
+    @DisplayName("Check unit collision with diagonal distance")
     public void testCheckUnitCollision_DiagonalDistance() {
         Position position1 = new Position(0, 0);
         Position position2 = new Position(30, 40);
@@ -165,6 +179,7 @@ public class MovementCalculatorTest {
     }
 
     @Test
+    @DisplayName("Resolve collision for overlapping units")
     public void testResolveCollision_OverlappingUnits() {
         Position position1 = new Position(10, 0);
         Position position2 = new Position(0, 0);
@@ -181,6 +196,7 @@ public class MovementCalculatorTest {
     }
 
     @Test
+    @DisplayName("Resolve collision for partially overlapping units")
     public void testResolveCollision_PartialOverlap() {
         Position position1 = new Position(5, 0);
         Position position2 = new Position(0, 0);
@@ -197,6 +213,7 @@ public class MovementCalculatorTest {
     }
 
     @Test
+    @DisplayName("Resolve collision for diagonal collision")
     public void testResolveCollision_DiagonalCollision() {
         Position position1 = new Position(1, 1);
         Position position2 = new Position(0, 0);
@@ -215,6 +232,7 @@ public class MovementCalculatorTest {
     }
 
     @Test
+    @DisplayName("Resolve collision when there is no overlap")
     public void testResolveCollision_NoOverlap() {
         Position position1 = new Position(100, 0);
         Position position2 = new Position(0, 0);

@@ -4,10 +4,12 @@ import io.vitals.game.model.Player;
 import io.vitals.game.model.Position;
 import io.vitals.game.model.Velocity;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GameContextTest {
     @Test
+    @DisplayName("GameContext stores player correctly")
     public void testGameContextPlayer() {
         Player player = new Player(new Position(400, 300), new Velocity(0, 0));
         GameContext context = new GameContext(player);
@@ -16,6 +18,7 @@ public class GameContextTest {
     }
 
     @Test
+    @DisplayName("GameContext can move player to new position")
     public void testGameContextMovePlayer() {
         Player player = new Player(new Position(0, 0), new Velocity(0, 0));
         GameContext context = new GameContext(player);
