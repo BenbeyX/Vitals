@@ -29,4 +29,24 @@ public class Opponent {
         return velocity;
     }
 
+    public Vital getVital() {
+        return vital;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = Math.max(0, hp);
+    }
+
+    public int getMaxHp() {
+        return maxHp;
+    }
+
+    public boolean isDefeated() {
+        return hp <= 0;
+    }
+
 }
