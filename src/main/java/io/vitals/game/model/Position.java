@@ -1,9 +1,13 @@
 package io.vitals.game.model;
+
 import java.util.Objects;
 
 public class Position {
     private double x;
     private double y;
+
+    public Position() {
+    }
 
     public Position(double x, double y) {
         this.x = x;

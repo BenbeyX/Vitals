@@ -1,5 +1,8 @@
 package io.vitals.game.result;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class SessionResult {
     private final int score;
     private final int vitalsHit;
@@ -9,8 +12,16 @@ public class SessionResult {
     private final double elapsedTime;
     private final double accuracy;
 
-    public SessionResult(int score, int vitalsHit, int opponentsSlain,
-                         int nonVitalHits, int whiffs, double elapsedTime, double accuracy) {
+    @JsonCreator
+    public SessionResult(
+        @JsonProperty("score") int score,
+        @JsonProperty("vitalsHit") int vitalsHit,
+        @JsonProperty("opponentsSlain") int opponentsSlain,
+        @JsonProperty("nonVitalHits") int nonVitalHits,
+        @JsonProperty("whiffs") int whiffs,
+        @JsonProperty("elapsedTime") double elapsedTime,
+        @JsonProperty("accuracy") double accuracy
+    ) {
         this.score = score;
         this.vitalsHit = vitalsHit;
         this.opponentsSlain = opponentsSlain;
