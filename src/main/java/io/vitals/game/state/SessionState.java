@@ -9,6 +9,7 @@ public class SessionState {
     private double qCooldownRemaining;
     private boolean speedBoostActive;
     private double speedBoostRemaining;
+    private int opponentsSlain;
 
     public SessionState() {
         this.elapsedTime = 0;
@@ -19,6 +20,7 @@ public class SessionState {
         this.qCooldownRemaining = 0;
         this.speedBoostActive = false;
         this.speedBoostRemaining = 0;
+        this.opponentsSlain = 0;
     }
 
     public double getElapsedTime() {
@@ -83,5 +85,13 @@ public class SessionState {
 
     public void setSpeedBoostRemaining(double speedBoostRemaining) {
         this.speedBoostRemaining = speedBoostRemaining;
+    }
+
+    public int getOpponentsSlain() {
+        return opponentsSlain;
+    }
+
+    public void setOpponentsSlain(int opponentsSlain) {
+        this.opponentsSlain = opponentsSlain;
     }
 }

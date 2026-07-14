@@ -18,6 +18,7 @@ public class SessionStateTest {
         assertEquals(0, state.getNonVitalHits(), "Non-vital hits should be 0");
         assertEquals(0, state.getQCooldownRemaining(), "Q cooldown should be 0");
         assertFalse(state.isSpeedBoostActive(), "Speed boost should not be active");
+        assertEquals(0, state.getOpponentsSlain(), "Opponents slain should be 0");
     }
 
     @Test
@@ -31,6 +32,7 @@ public class SessionStateTest {
         state.setNonVitalHits(1);
         state.setQCooldownRemaining(3.2);
         state.setSpeedBoostActive(true);
+        state.setOpponentsSlain(3);
 
         assertEquals(45.5, state.getElapsedTime(), "Elapsed time should be 45.5");
         assertEquals(10, state.getScore(), "Score should be 10");
@@ -39,5 +41,6 @@ public class SessionStateTest {
         assertEquals(1, state.getNonVitalHits(), "Non-vital hits should be 1");
         assertEquals(3.2, state.getQCooldownRemaining(), "Q cooldown should be 3.2");
         assertTrue(state.isSpeedBoostActive(), "Speed boost should be active");
+        assertEquals(3, state.getOpponentsSlain(), "Opponents slain should be 3");
     }
 }
