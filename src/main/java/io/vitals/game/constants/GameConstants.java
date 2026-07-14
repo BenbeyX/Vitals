@@ -21,5 +21,7 @@ public class GameConstants {
     public static final int NON_VITAL_DAMAGE = 1;
     public static final int DEFAULT_Q_COOLDOWN = 5;
     public static final double RIGHT_CLICK_ATTACK_COOLDOWN = 0.5;
-    public static final int RESPAWN_DELAY = 1;    
+    public static final int RESPAWN_DELAY = 1;
+    public static final int VITAL_HIT_SCORE = 10;
+    public static final int OPPONENT_SLAIN_SCORE = 50;
 }
