@@ -13,6 +13,7 @@ public class GameConstants {
     public static final int VITAL_CONE_ANGLE = 90;
     public static final int VITAL_SWITCH_DELAY = 1;
     public static final int SPEED_BOOST = 20;
+    public static final double SPEED_BOOST_DURATION = 1.5;
     public static final int DODGE_COOLDOWN = 3;
     public static final int PROXIMITY_TRIGGER_RANGE = 300;
     public static final int DEFAULT_HP = 5;

@@ -3,6 +3,7 @@ package io.vitals.game.service;
 import io.vitals.game.constants.GameConstants;
 import io.vitals.game.model.Opponent;
 import io.vitals.game.model.Position;
+import io.vitals.game.state.SessionState;
 
 import java.util.List;
 
@@ -42,8 +43,18 @@ public class CombatResolver {
         return new DamageResult(previousHp, newHp, isVitalHit, damage);
     }
 
-    public boolean calculateSpeedBoost(boolean vitalHit) {
-        return vitalHit;
+    public boolean calculateSpeedBoost(boolean vitalHit, SessionState state) {
+        if (vitalHit) {
+            state.setSpeedBoostRemaining(GameConstants.SPEED_BOOST_DURATION);
+            return true;
+        }
+        return state.getSpeedBoostRemaining() > 0;
+    }
+
+    public void tickSpeedBoost(SessionState state, double deltaSeconds) {
+        if (state.getSpeedBoostRemaining() > 0) {
+            state.setSpeedBoostRemaining(Math.max(0, state.getSpeedBoostRemaining() - deltaSeconds));
+        }
     }
 
     public static class DamageResult {

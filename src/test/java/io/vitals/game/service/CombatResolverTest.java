@@ -4,6 +4,7 @@ import io.vitals.game.model.Opponent;
 import io.vitals.game.model.Position;
 import io.vitals.game.model.Velocity;
 import io.vitals.game.model.Vital;
+import io.vitals.game.state.SessionState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,11 +18,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class CombatResolverTest {
 
     private CombatResolver combatResolver;
+    private SessionState sessionState;
 
     @BeforeEach
     void setUp() {
         VitalManager vitalManager = new VitalManager();
         combatResolver = new CombatResolver(vitalManager);
+        sessionState = new SessionState();
     }
 
     // ==================== findNearestTarget Tests ====================
@@ -207,39 +210,88 @@ class CombatResolverTest {
     // ==================== calculateSpeedBoost Tests ====================
 
     @Test
-    @DisplayName("calculateSpeedBoost returns true on vital hit")
-    void calculateSpeedBoost_vitalHit_returnsTrue() {
-        boolean result = combatResolver.calculateSpeedBoost(true);
+    @DisplayName("calculateSpeedBoost activates on vital hit")
+    void calculateSpeedBoost_vitalHit_activates() {
+        boolean result = combatResolver.calculateSpeedBoost(true, sessionState);
+
+        assertTrue(result);
+        assertTrue(sessionState.getSpeedBoostRemaining() > 0);
+    }
+
+    @Test
+    @DisplayName("calculateSpeedBoost does not activate on non-vital hit with no active boost")
+    void calculateSpeedBoost_nonVitalHit_noActiveBoost_returnsFalse() {
+        boolean result = combatResolver.calculateSpeedBoost(false, sessionState);
+
+        assertFalse(result);
+        assertEquals(0, sessionState.getSpeedBoostRemaining(), 0.001);
+    }
+
+    @Test
+    @DisplayName("calculateSpeedBoost persists through non-vital hit while active")
+    void calculateSpeedBoost_nonVitalHit_whileActive_staysActive() {
+        combatResolver.calculateSpeedBoost(true, sessionState);
+
+        boolean result = combatResolver.calculateSpeedBoost(false, sessionState);
 
         assertTrue(result);
     }
 
     @Test
-    @DisplayName("calculateSpeedBoost returns false on non-vital hit")
-    void calculateSpeedBoost_nonVitalHit_returnsFalse() {
-        boolean result = combatResolver.calculateSpeedBoost(false);
+    @DisplayName("calculateSpeedBoost refreshes duration on consecutive vital hits")
+    void calculateSpeedBoost_consecutiveVitalHits_refreshes() {
+        combatResolver.calculateSpeedBoost(true, sessionState);
+        double remainingAfterFirst = sessionState.getSpeedBoostRemaining();
 
+        combatResolver.tickSpeedBoost(sessionState, 0.5);
+        double remainingAfterTick = sessionState.getSpeedBoostRemaining();
+        assertTrue(remainingAfterTick < remainingAfterFirst);
+
+        combatResolver.calculateSpeedBoost(true, sessionState);
+
+        assertEquals(1.5, sessionState.getSpeedBoostRemaining(), 0.001);
+    }
+
+    @Test
+    @DisplayName("calculateSpeedBoost expires after duration ticks down")
+    void calculateSpeedBoost_expiresAfterDuration() {
+        combatResolver.calculateSpeedBoost(true, sessionState);
+
+        combatResolver.tickSpeedBoost(sessionState, 1.5);
+
+        boolean result = combatResolver.calculateSpeedBoost(false, sessionState);
         assertFalse(result);
+        assertEquals(0, sessionState.getSpeedBoostRemaining(), 0.001);
     }
 
     @Test
-    @DisplayName("calculateSpeedBoost refreshes on consecutive vital hits")
-    void calculateSpeedBoost_consecutiveVitalHits_returnsTrue() {
-        boolean first = combatResolver.calculateSpeedBoost(true);
-        boolean second = combatResolver.calculateSpeedBoost(true);
+    @DisplayName("calculateSpeedBoost remains active if duration has not fully expired")
+    void calculateSpeedBoost_partialTick_staysActive() {
+        combatResolver.calculateSpeedBoost(true, sessionState);
 
-        assertTrue(first);
-        assertTrue(second);
+        combatResolver.tickSpeedBoost(sessionState, 1.0);
+
+        boolean result = combatResolver.calculateSpeedBoost(false, sessionState);
+        assertTrue(result);
+        assertEquals(0.5, sessionState.getSpeedBoostRemaining(), 0.001);
     }
 
     @Test
-    @DisplayName("calculateSpeedBoost deactivates on non-vital hit after vital hit")
-    void calculateSpeedBoost_vitalThenNonVital_returnsCorrectSequence() {
-        boolean first = combatResolver.calculateSpeedBoost(true);
-        boolean second = combatResolver.calculateSpeedBoost(false);
+    @DisplayName("tickSpeedBoost does not go below zero")
+    void tickSpeedBoost_doesNotGoBelowZero() {
+        combatResolver.calculateSpeedBoost(true, sessionState);
 
-        assertTrue(first);
-        assertFalse(second);
+        combatResolver.tickSpeedBoost(sessionState, 5.0);
+
+        assertEquals(0, sessionState.getSpeedBoostRemaining(), 0.001);
+    }
+
+    @Test
+    @DisplayName("tickSpeedBoost does nothing when no boost is active")
+    void tickSpeedBoost_noActiveBoost_noChange() {
+        combatResolver.tickSpeedBoost(sessionState, 1.0);
+
+        assertEquals(0, sessionState.getSpeedBoostRemaining(), 0.001);
     }
 
     // ==================== Helper Methods ====================
@@ -257,3 +309,4 @@ class CombatResolverTest {
         );
     }
 }
+
