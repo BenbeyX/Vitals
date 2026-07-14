@@ -1,5 +1,7 @@
 package io.vitals.game.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Opponent {
     private Position position;
     private Velocity velocity;
@@ -17,6 +19,9 @@ public class Opponent {
     private double dodgeCooldownRemaining;
     private boolean retaliationActive;
     private boolean active;
+
+    public Opponent() {
+    }
 
     public Opponent(Position position, Velocity velocity, Vital vital, int hp, int maxHp,
                    int cooldown, int maxCooldown, int cooldownRemaining) {
@@ -83,6 +88,11 @@ public class Opponent {
         return maxHp;
     }
 
+    public void setMaxHp(int maxHp) {
+        this.maxHp = maxHp;
+    }
+
+    @JsonIgnore
     public boolean isDefeated() {
         return hp <= 0;
     }
@@ -91,8 +101,16 @@ public class Opponent {
         return cooldown;
     }
 
+    public void setCooldown(int cooldown) {
+        this.cooldown = cooldown;
+    }
+
     public int getMaxCooldown() {
         return maxCooldown;
+    }
+
+    public void setMaxCooldown(int maxCooldown) {
+        this.maxCooldown = maxCooldown;
     }
 
     public int getCooldownRemaining() {
